@@ -6,10 +6,11 @@ The addon is created for Firefox and was tested on v58.0.1 on Windows 10.
 
 ## Supported websites
 * FAZ.net
-* Golem.de
-* Heise.de
-* Sueddeutsche.de
-* Zeit.de
+* golem.de
+* heise.de
+* sueddeutsche.de
+* wiwo.de (Wirtschaftswoche)
+* zeit.de
 * 11freunde.de
 
 Additional websites can be added in *js/domains.js*.

@@ -9,6 +9,7 @@ let KEY_FAZ = "faz";
 let KEY_GOLEM = "golem";
 let KEY_HEISE = "heise";
 let KEY_SUEDDEUTSCHE = "sueddeutsche";
+let KEY_WIWO = "wiwo";
 let KEY_ZEIT = "zeit";
 let KEY_ELFFREUNDE = "11freunde";
 
@@ -18,6 +19,7 @@ let KEY_ELFFREUNDE = "11freunde";
 // http://www.faz.net/aktuell/beruf-chance/beruf/ratgeber-fuer-fuehrungskraefte-wie-serioes-sind-business-coaches-13290487.html
 // https://www.golem.de/news/freier-media-player-vlc-3-0-eint-alle-plattformen-1802-132646.html
 // http://www.sueddeutsche.de/karriere/befristung-der-spd-vorstoss-gegen-befristete-vertraege-ist-scheinheilig-1.3837184
+// https://www.wiwo.de/technologie/digitale-welt/bargeldloses-schweden-ohne-krone-lebt-es-sich-gefaehrlich/20989954.html
 // https://www.11freunde.de/artikel/jakub-blaszczykowski-ueber-die-schlimmste-zeit-seines-lebens
 
 // Supported websites with following params:
@@ -43,6 +45,9 @@ let domains = [
 	}, {
 		key: KEY_SUEDDEUTSCHE, domain: "sueddeutsche.de",
 		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!article.singlePage=true$))+$/g, urlInsert: "?article.singlePage=true"
+	}, {
+		key: KEY_WIWO, domain: "wiwo.de",
+		method: METHOD_REDIRECT, urlPattern: /^(.*[0-9])(\.html)$/g, urlInsert: "-all"
 	}, { 
 		key: KEY_ZEIT, domain: "zeit.de", 
 		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!komplettansicht$))+$/g, urlInsert: "/komplettansicht"

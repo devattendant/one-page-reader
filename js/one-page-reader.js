@@ -12,7 +12,7 @@ function redirectListener(requestDetails) {
 			request.open("GET", redirectUrl, false);
 			request.send();
 
-			if (redirectUrl && request.status === 200) {
+			if (redirectUrl && request.status === 200 && requestDetails.url !== request.responseURL) {
 				return {
 					redirectUrl: redirectUrl
 				};
