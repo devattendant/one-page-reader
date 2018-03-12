@@ -1,7 +1,7 @@
 // append.js is responsible for adding article content inline (METHOD_HTMLAPPEND). This content script
 // registers a listener to receive messages from the background script including the found domain. This
 // then starts the recursive loading of the complete article based on identified pagination.
-browser.runtime.onMessage.addListener(backgroundListener);
+browserHelper().runtime.onMessage.addListener(backgroundListener);
 
 function backgroundListener(message) {
 	if (!message.domain || !message.url) return;
@@ -79,4 +79,12 @@ function removePagination(domain, html) {
 			});
 		}
 	});
+}
+
+var hasBrowser = undefined;
+function browserHelper() {
+	if (hasBrowser === undefined) {
+		hasBrowser = typeof (browser) !== "undefined";
+	}
+	return hasBrowser ? browser : chrome;
 }

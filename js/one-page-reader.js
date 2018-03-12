@@ -7,15 +7,17 @@ function redirectListener(requestDetails) {
 			let redirectUrl = createUrl(domain, requestDetails.url);
 
 			// Check if redirectUrl is valid and not 404
-			// TODO?: Make request async
-			var request = new XMLHttpRequest();
-			request.open("GET", redirectUrl, false);
-			request.send();
+			if (redirectUrl) {
+				// TODO?: Make request async
+				var request = new XMLHttpRequest();
+				request.open("GET", redirectUrl, false);
+				request.send();
 
-			if (redirectUrl && request.status === 200 && requestDetails.url !== request.responseURL) {
-				return {
-					redirectUrl: redirectUrl
-				};
+				if (redirectUrl && request.status === 200 && requestDetails.url !== request.responseURL) {
+					return {
+						redirectUrl: redirectUrl
+					};
+				}
 			}
 		}
 	}
@@ -29,11 +31,11 @@ function completedListener(requestDetails) {
 		if (domain && domain.method === METHOD_HTMLAPPEND) {
 			// Timeout as a workaround for "Error: No matching message handler".
 			setTimeout(() => {
-				let executing = browser.tabs.executeScript(requestDetails.tabId, { file: "/js/url-utils.js" });
+				let executing = browserHelper().tabs.executeScript(requestDetails.tabId, { file: "/js/url-utils.js" });
 				executing.then(function () {
-					let executing = browser.tabs.executeScript(requestDetails.tabId, { file: "/js/append.js" });
+					let executing = browserHelper().tabs.executeScript(requestDetails.tabId, { file: "/js/append.js" });
 					executing.then(function () {
-						browser.tabs.sendMessage(requestDetails.tabId, { "domain": domain, "url": requestDetails.url });
+						browserHelper().tabs.sendMessage(requestDetails.tabId, { "domain": domain, "url": requestDetails.url });
 					}, function (error) {
 						console.log(error);
 					});
@@ -45,14 +47,22 @@ function completedListener(requestDetails) {
 	}
 }
 
-
-browser.webRequest.onBeforeRequest.addListener(
+console.log(typeof (browser));
+browserHelper().webRequest.onBeforeRequest.addListener(
 	redirectListener,
 	{ urls: ["<all_urls>"] },
 	["blocking"]
 );
 
-browser.webRequest.onCompleted.addListener(
+browserHelper().webRequest.onCompleted.addListener(
 	completedListener,
 	{ urls: ["<all_urls>"] }
 );
+
+var hasBrowser = undefined;
+function browserHelper() {
+	if (hasBrowser === undefined) {
+		hasBrowser = typeof(browser) !== "undefined";
+	}
+	return hasBrowser ? browser : chrome;
+}

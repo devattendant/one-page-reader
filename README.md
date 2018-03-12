@@ -1,8 +1,12 @@
 # One Page Reader
 
-This Firefox add-on attempts to automatically loaded news article in one site. The add-on has been developed because various (especially German) websites are publishing article divided in multiple pages.
+This add-on attempts to automatically loaded news article in one site. The add-on has been developed because various (especially German) websites are publishing article divided in multiple pages.
 
 The addon is created for Firefox and was tested on v58.0.1 on Windows 10.
+
+## Tested browsers
+* Firefox v58.0.1, Windows 10
+* Chrome v64.0, Windows 10
 
 ## Supported websites
 * FAZ.net

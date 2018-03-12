@@ -1,8 +1,9 @@
 {
 	"manifest_version": 2,
 	"name": "One Page Reader",
+	"description": "__MSG_appDesc__",
+	"default_locale": "en",
 	"version": "1.0.0",
-	"description": "Allows news articles to be opened directly on one page and not splitted in several pages.",
 	"icons": {
 		"48": "icon-48.png",
 		"96": "icon-96.png"
