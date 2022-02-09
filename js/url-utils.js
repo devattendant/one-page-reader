@@ -8,6 +8,9 @@ function createUrl(domain, url, page = undefined) {
 		// Create URL replacement with optional pagination.
 		let urlInsert = page ? domain.urlInsert.replace("{page}", page) : domain.urlInsert;
 
+		// Add urlInsert as parameter to url query
+		urlInsert = urlInsert.replace("{?}", url.includes("?") ? "&" : "?");
+
 		if (results.length === 1) {
 			// Append at the end.
 			return url + urlInsert;

@@ -5,8 +5,8 @@ This add-on attempts to automatically loaded news article in one site. The add-o
 The addon is created for Firefox and was tested on v58.0.1 on Windows 10.
 
 ## Tested browsers
-* Firefox v58.0.1, Windows 10
-* Chrome v64.0, Windows 10
+* Firefox v97.0, Windows 10
+* Chrome v98.0, Windows 10
 
 ## Supported websites
 * FAZ.net
@@ -20,6 +20,7 @@ The addon is created for Firefox and was tested on v58.0.1 on Windows 10.
 Additional websites can be added in *js/domains.js*.
 
 ## Known issues/todos
+* Golem.de: Fetching other pages' content is not working due to JS being blocked (see [#1](https://github.com/devattendant/one-page-reader/issues/1))
 * Golem.de: Video scripts for videos on pages > 1 are not included and therefore missing
 * Test code is missing
 

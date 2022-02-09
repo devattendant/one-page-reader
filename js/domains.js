@@ -30,6 +30,7 @@ let KEY_ELFFREUNDE = "11freunde";
 //                          Pattern should return zero capture groups to add at the end of the string or 2 capture groups to add between.
 // urlInsert              - The string content inserted into the URL to redirect or add pagination for HTMLAPPEND.
 //                          For HTMLAPPEND use {page} to replace with a capture group found with paginationPattern.
+//							Use {?} to add a query parameter. {?} will be replaced by either ? or & depending on the URL having query parameters already.
 // paginationPattern      - (HTMLAPPEND only) RegEx to identify how many pages have to be loaded. Must return capture groups for
 //                          each page, which are inserted into {page} in urlInsert template.
 // articlePattern         - (HTMLAPPEND only) RegEx to find the article content inside of the loaded page.
@@ -38,13 +39,13 @@ let KEY_ELFFREUNDE = "11freunde";
 let domains = [
 	{
 		key: KEY_FAZ, domain: "faz.net",
-		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!printPagedArticle=true#pageIndex_0$))+$/g, urlInsert: "?printPagedArticle=true#pageIndex_0"
+		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!printPagedArticle=true#pageIndex_0$))+$/g, urlInsert: "{?}printPagedArticle=true#pageIndex_0"
 	}, { 
 		key: KEY_HEISE, domain: "heise.de", 
-		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!seite=all$))+$/g, urlInsert: "?seite=all"
+		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!seite=all$))+$/g, urlInsert: "{?}seite=all"
 	}, {
 		key: KEY_SUEDDEUTSCHE, domain: "sueddeutsche.de",
-		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!article.singlePage=true$))+$/g, urlInsert: "?article.singlePage=true"
+		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!article.singlePage=true$))+$/g, urlInsert: "{?}article.singlePage=true"
 	}, {
 		key: KEY_WIWO, domain: "wiwo.de",
 		method: METHOD_REDIRECT, urlPattern: /^(.*[0-9])(\.html)$/g, urlInsert: "-all"
@@ -57,7 +58,7 @@ let domains = [
 		paginationPattern: /(?:<li><a.*id="jtoc_[0-9]".*>)([0-9])(?:<\/a><\/li>)/gm,
 		articlePattern: /<article>([.\s\S]*)<\/article>/gm,
 		articleAppendToTagName: "article",
-		removePagination: [{ type: "id", name: "list-jtoc" }, { type: "id", name: "table-jtoc" }]
+		removePagination: [{ type: "id", name: "list-jtoc" }, { type: "id", name: "table-jtoc" }, { type: "class", name: "social-tools--footer" }, { type: "id", name: "breadcrumbs" }, { type: "class", name: "topictags" }]
 	}, {
 		key: KEY_ELFFREUNDE, domain: "11freunde.de",
 		method: METHOD_HTMLAPPEND, urlPattern: /^(?:.(?!\/page\/[0-9]$))+$/g, urlInsert: "/page/{page}",

@@ -3,7 +3,7 @@
 	"name": "One Page Reader",
 	"description": "__MSG_appDesc__",
 	"default_locale": "en",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"icons": {
 		"48": "icon-48.png",
 		"96": "icon-96.png"
