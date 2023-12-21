@@ -1,0 +1,26 @@
+{
+  "name": "one-page-reader",
+  "version": "1.0.4",
+  "displayName": "One Page Reader",
+  "author": "@samrum/vite-plugin-web-extension",
+  "description": "A @samrum/vite-plugin-web-extension web extension",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "watch": "vite build --watch --mode development --minify false",
+    "dev": "vite",
+    "serve:firefox": "web-ext run --start-url \"about:debugging#/runtime/this-firefox\"  --source-dir ./dist/",
+    "serve:chrome": "web-ext run -t chromium --start-url \"https://example.com\" --source-dir ./dist/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@samrum/vite-plugin-web-extension": "^5.0.0",
+    "@types/chrome": "^0.0.254",
+    "@types/webextension-polyfill": "^0.10.6",
+    "vite": "^5.0.0",
+    "web-ext": "^7.8.0"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.10.0"
+  }
+}

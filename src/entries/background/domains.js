@@ -1,8 +1,8 @@
 // Methods available to show a full article to the user:
 // REDIRECT - redirect the user to another URL with a full view provided by the website based on a pattern.
 // HTMLAPPEND - recursively load page 2, 3, etc. and append article text to the first already loaded page. 
-let METHOD_REDIRECT = "redirect";
-let METHOD_HTMLAPPEND = "htmlappend";
+export let METHOD_REDIRECT = "redirect";
+export let METHOD_HTMLAPPEND = "htmlappend";
 
 // Identifiers for all supported websites. Allows e.g. to manually filter code for special modifications.
 let KEY_FAZ = "faz";
@@ -36,22 +36,48 @@ let KEY_ELFFREUNDE = "11freunde";
 // articlePattern         - (HTMLAPPEND only) RegEx to find the article content inside of the loaded page.
 // articleAppendToTagName - (HTMLAPPEND only) Loaded article content of pages 2, 3, etc. will be append to this tag's innerHTML
 // removePagination       - (HTMLAPPEND only) DOM Elements to identify and remove pagination from the complete article.
-let domains = [
+export let domains = [
 	{
 		key: KEY_FAZ, domain: "faz.net",
-		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!printPagedArticle=true#pageIndex_0$))+$/g, urlInsert: "{?}printPagedArticle=true#pageIndex_0"
+		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!printPagedArticle=true#pageIndex_0$))+$/g, urlInsert: "{?}printPagedArticle=true#pageIndex_0",
+		urlPatternAllowed: /printPagedArticle=true/g, urlPatternRedirect: /\.html/g,
+		redirect: { 
+			transform: { 
+				queryTransform: { addOrReplaceParams: [{ key: "printPagedArticle", value: "true" }] }
+			}
+		}
 	}, { 
-		key: KEY_HEISE, domain: "heise.de", 
-		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!seite=all$))+$/g, urlInsert: "{?}seite=all"
+		key: KEY_HEISE, domain: "heise.de",
+		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!seite=all$))+$/g, urlInsert: "{?}seite=all",
+		urlPatternAllowed: /seite=all/g, urlPatternRedirect: /\.html/g,
+		redirect: { 
+			transform: { 
+				queryTransform: { addOrReplaceParams: [{ key: "seite", value: "all" }] }
+			}
+		}
 	}, {
 		key: KEY_SUEDDEUTSCHE, domain: "sueddeutsche.de",
-		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!article.singlePage=true$))+$/g, urlInsert: "{?}article.singlePage=true"
+		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!article.singlePage=true$))+$/g, urlInsert: "{?}article.singlePage=true",
+		urlPatternAllowed: /article.singlePage=true/g, urlPatternRedirect: /.*/g,
+		redirect: { 
+			transform: { 
+				queryTransform: { addOrReplaceParams: [{ key: "article.singlePage", value: "true" }] }
+			}
+		}
 	}, {
 		key: KEY_WIWO, domain: "wiwo.de",
-		method: METHOD_REDIRECT, urlPattern: /^(.*[0-9])(\.html)$/g, urlInsert: "-all"
+		method: METHOD_REDIRECT, urlPattern: /^(.*[0-9])(\.html)$/g, urlInsert: "-all",
+		urlPatternAllowed: /-all.html/g, urlPatternRedirect: /(.+)(\.html)(.*)/g,
+		redirect: { 
+			regexSubstitution: "\\1-all.html\\3"
+		}
 	}, { 
 		key: KEY_ZEIT, domain: "zeit.de", 
-		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!komplettansicht$))+$/g, urlInsert: "/komplettansicht"
+		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!komplettansicht$))+$/g, urlInsert: "/komplettansicht",
+		urlPatternAllowed: /komplettansicht/g, urlPatternRedirect: /([^\?#]+)(.*)/g,
+		redirect: { 
+			regexSubstitution: "\\1/komplettansicht\\2"
+		}
 	}, { 
 		key: KEY_GOLEM, domain: "golem.de",
 		method: METHOD_HTMLAPPEND, urlPattern: /(.*)(\.html)/g, urlInsert: "-{page}",
@@ -71,7 +97,7 @@ let domains = [
 
 // This method returns the domain object based on the requestDetails, basically the URL.
 // TODO?: Require only URL as param.
-function findValidDomain(requestDetails) {
+export function findValidDomain(requestDetails) {
 	return domains.find(element => {
 		var t = (new RegExp("https?://([^\\.]*\\.)?" + element.domain + "(.)", "i"));
 		if ((new RegExp("https?://([^\\.]*\\.)?" + element.domain + "(.)", "i")).test(requestDetails.url)) {
