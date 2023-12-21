@@ -18,8 +18,8 @@ This add-on attempts to automatically loaded news article in one site. The add-o
 Additional websites can be added in `src/entries/background/domains.js`.
 
 ## Known issues/todos
-* Golem.de: Fetching other pages' content is not working due to JS being blocked (see [#1](https://github.com/devattendant/one-page-reader/issues/1))
 * Golem.de: Video scripts for videos on pages > 1 are not included and therefore missing
+* `domains.js`: Clean up `urlPattern`, `urlPatternAllowed`, `urlPatternRedirect` and `urlInsert`
 * Test code is missing
 
 ## Project setup
