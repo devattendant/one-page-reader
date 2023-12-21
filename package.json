@@ -1,9 +1,9 @@
 {
   "name": "one-page-reader",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "displayName": "One Page Reader",
-  "author": "@samrum/vite-plugin-web-extension",
-  "description": "A @samrum/vite-plugin-web-extension web extension",
+  "author": "DevAttendant",
+  "description": "This add-on attempts to automatically loaded news article in one site.",
   "type": "module",
   "scripts": {
     "build": "vite build",

@@ -48,7 +48,6 @@ const ManifestV3 = {
     permissions: [
         ...sharedManifest.permissions,
         "declarativeNetRequest",
-        "declarativeNetRequestFeedback",
         'scripting'
     ],
     host_permissions: [
