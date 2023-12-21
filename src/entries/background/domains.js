@@ -82,7 +82,7 @@ export let domains = [
 		key: KEY_GOLEM, domain: "golem.de",
 		method: METHOD_HTMLAPPEND, urlPattern: /(.*)(\.html)/g, urlInsert: "-{page}",
 		paginationPattern: /(?:<li><a.*id="jtoc_[0-9]".*>)([0-9])(?:<\/a><\/li>)/gm,
-		articlePattern: /<article>([.\s\S]*)<\/article>/gm,
+		articlePattern: /<article>([\s\S]*?)(<figure [^>]*?>[\s\S]*?<\/figure>)([\s\S]*?)<\/article>/gm,
 		articleAppendToTagName: "article",
 		removePagination: [{ type: "id", name: "list-jtoc" }, { type: "id", name: "table-jtoc" }, { type: "class", name: "social-tools--footer" }, { type: "id", name: "breadcrumbs" }, { type: "class", name: "topictags" }]
 	}, {

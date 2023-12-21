@@ -71,7 +71,7 @@ function removePagination(domain, html) {
 								 element.type === "class" ? html.getElementsByClassName(element.name) : undefined;
 		if (paginationElements) {
 			Array.prototype.forEach.call(paginationElements, paginationElement => {
-				paginationElement.remove();
+				paginationElement?.remove();
 			});
 		}
 	});
