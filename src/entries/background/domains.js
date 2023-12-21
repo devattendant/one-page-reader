@@ -20,7 +20,7 @@ let KEY_ELFFREUNDE = "11freunde";
 // https://www.golem.de/news/freier-media-player-vlc-3-0-eint-alle-plattformen-1802-132646.html
 // http://www.sueddeutsche.de/karriere/befristung-der-spd-vorstoss-gegen-befristete-vertraege-ist-scheinheilig-1.3837184
 // https://www.wiwo.de/technologie/digitale-welt/bargeldloses-schweden-ohne-krone-lebt-es-sich-gefaehrlich/20989954.html
-// https://www.11freunde.de/artikel/jakub-blaszczykowski-ueber-die-schlimmste-zeit-seines-lebens
+// https://11freunde.de/artikel/es-muss-weitergehen/534681
 
 // Supported websites with following params:
 // key                    - An identifier for the website as defined above.
@@ -87,11 +87,11 @@ export let domains = [
 		removePagination: [{ type: "id", name: "list-jtoc" }, { type: "id", name: "table-jtoc" }, { type: "class", name: "social-tools--footer" }, { type: "id", name: "breadcrumbs" }, { type: "class", name: "topictags" }]
 	}, {
 		key: KEY_ELFFREUNDE, domain: "11freunde.de",
-		method: METHOD_HTMLAPPEND, urlPattern: /^(?:.(?!\/page\/[0-9]$))+$/g, urlInsert: "/page/{page}",
-		paginationPattern: /(?:<li><a href=".*?\/page\/)([0-9])(?:" title=".*?">Seite)/gm,
-		articlePattern: /<article[.\s\S]*?<h3 class="faqfield-question">.*?<\/h3>([.\s\S]*?)(?:<ul class="(?:links|article-pager-toc)">[.\s\S]*?)?<\/article>/m,
-		articleAppendToTagName: "article",
-		removePagination: [{ type: "class", name: "links" }, { type: "class", name: "article-pager-toc" }]
+		method: METHOD_REDIRECT, urlPattern: /^(?:.(?!komplettansicht$))+$/g, urlInsert: "?komplettansicht",
+		urlPatternAllowed: /komplettansicht/g, urlPatternRedirect: /([^\?#]+)(.*)/g,
+		redirect: { 
+			regexSubstitution: "\\1?komplettansicht"
+		}
 	}
 ];
 
